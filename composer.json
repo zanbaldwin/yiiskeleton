@@ -2,7 +2,8 @@
     "name":             "mynameiszanders/yiiskeleton",
     "description":      "Yii skeleton app for quick bootstrapping of new projects via Composer's create-project command.",
     "keywords":         ["skeleton", "application", "yii", "create", "project"],
-    "type":             "application",
+    "type":             "project",
+    "homepage":         "https://github.com/mynameiszanders/yiiskeleton",
     "license":          "MIT",
 
     "authors": [
@@ -22,6 +23,7 @@
 
     "require": {
         "rych/phpass":  "2.1.x-dev",
-        "yiisoft/yii": "1.1.14"
+        "yiisoft/yii":  "1.1.14",
+        "php":          ">=5.3"
     }
 }
