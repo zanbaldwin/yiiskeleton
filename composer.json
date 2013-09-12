@@ -1,0 +1,27 @@
+{
+    "name":             "mynameiszanders/yiiskeleton",
+    "description":      "Yii skeleton app for quick bootstrapping of new projects via Composer's create-project command.",
+    "keywords":         ["skeleton", "application", "yii", "create", "project"],
+    "type":             "application",
+    "license":          "MIT",
+
+    "authors": [
+        {
+            "name":     "Zander Baldwin",
+            "email":    "mynameiszanders@gmail.com",
+            "homepage": "http://mynameis.zande.rs/",
+            "role":     "Developer"
+        }
+    ],
+
+    "minimum-stability": "dev",
+
+    "config": {
+        "vendor-dir":   "application/vendor"
+    },
+
+    "require": {
+        "rych/phpass":  "2.1.x-dev",
+        "yiisoft/yii": "1.1.14"
+    }
+}
