@@ -1,6 +1,5 @@
 <?php
 
-    defined('APPENV') || define('APPENV', 'test');
-    defined('PRODUCTION') || define('PRODUCTION', APPENV === 'production');
+    defined('ENVIRONMENT') || define('ENVIRONMENT', 'test');
 
     require_once dirname(__FILE__) . '/index.php';

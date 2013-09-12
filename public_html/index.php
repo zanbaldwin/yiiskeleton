@@ -15,9 +15,7 @@
 
     // Require the configuration file that sets the application environment (unless it has already been set by another
     // front-controller).
-    if(!defined('APPENV')) {
-        require_once $env;
-    }
+    require_once $env;
 
     // If we are not in production mode, we want to enable debugging, HTML logging, and backtraces.
     // Note that YII_DEBUG must be defined BEFORE we include the Yii Framework bootstrap file.
