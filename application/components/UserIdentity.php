@@ -1,5 +1,10 @@
 <?php
 
+    namespace application\components;
+
+    use \Yii;
+    use \CException;
+    use \CEvent as Event;
     use \application\models\db\User;
     use \application\models\db\FailedLogin;
 
@@ -105,7 +110,7 @@
         public function authenticate()
         {
             // Raise the "startAuthenticate" event.
-            $this->onAuthenticateStart(new CEvent($this));
+            $this->onAuthenticateStart(new Event($this));
 
             // Load the model of the user defined by the username provided by the end-user.
             $user = User::model()->findByAttributes(array('username' => $this->username));
@@ -115,7 +120,7 @@
                 $this->errorCode = self::ERROR_USERNAME_INVALID;
                 // Raise "onPasswordIncorrect" event; specifying that the password that the end-user entered was
                 // incorrect.
-                $this->onUsernameInvalid(new CEvent($this));
+                $this->onUsernameInvalid(new Event($this));
                 return false;
             }
             // Store the user ID in a local scope variable so that we don't have to query the User model object each
@@ -124,7 +129,7 @@
 
             // Raise the "onUsernameValid" event; specifying that the username that the end-user entered has been found
             // in the database.
-            $this->onUsernameValid(new CEvent($this));
+            $this->onUsernameValid(new Event($this));
 
             // Check that the password supplied matched the hash stored in the database. If it doesn't add a FailedLogin
             // entry, set the error code to ERROR_PASSWORD_INVALID, return false.
@@ -133,12 +138,12 @@
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
                 // Raise the "onPasswordIncorrect" event; specifying that the password that the end-user entered was
                 // incorrect.
-                $this->onPasswordIncorrect(new CEvent($this));
+                $this->onPasswordIncorrect(new Event($this));
                 return false;
             }
 
             // Raise the "onPasswordCorrect" event; specifying that the password that the end-user entered was correct.
-            $this->onPasswordCorrect(new CEvent($this));
+            $this->onPasswordCorrect(new Event($this));
 
             // Set the user variables that we would like persisted accross subsequent HTTP requests in the session
             // state.
@@ -153,7 +158,7 @@
 
             // Raise the "onStatesPersisted" event; specifying that the variables to be saved in the user-specific
             // session have been defined.
-            $this->onStatesPersisted(new CEvent($this));
+            $this->onStatesPersisted(new Event($this));
 
             // Now that information has been store to the session state, specify that we did not come across an error
             // and return true.

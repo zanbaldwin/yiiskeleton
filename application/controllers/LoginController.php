@@ -1,5 +1,8 @@
 <?php
 
+    use \application\components\Form;
+    use \application\components\UserIdentity;
+
     class LoginController extends Controller
     {
 
@@ -21,15 +24,13 @@
             if(!Yii::app()->user->isGuest) {
                 $this->redirect(Yii::app()->homeUrl);
             }
-            // Create an instance of the form model, this controls all of the validation rules (data).
-            $model = new \application\models\form\Login;
             // Create an instance of the form builder, this controls all of the display logic (inputs).
             // Load up the form configuration from the path alias, and associate it with the form model.
-            $form = new \application\components\Form('application.forms.login', $model);
+            $form = new Form('application.forms.login', new \application\models\form\Login);
             // Check that the form has been submitted, and if has, if it passes the models validation rules.
             if($form->submitted() && $form->validate()) {
                 // Seeing as the end-user has provided valid input data, create a new user identity with it.
-                $this->identity = new UserIdentity($model->username, $model->password);
+                $this->identity = new UserIdentity($form->model->username, $form->model->password);
                 // Do the credentials provided by the end-user's input data authenticate them as a valid user?
                 if($this->identity->authenticate()) {
                     // Great! The end-user provided correct authentication credentials! Log in the user provided by the
@@ -44,7 +45,7 @@
                 else {
                     // Log this failed authentication attempt.
                     Yii::log(
-                        'User "' . $model->username . '" provided incorrect credentials.',
+                        'User "' . $form->model->username . '" provided incorrect credentials.',
                         'info',
                         'application.controllers.LoginController'
                     );
@@ -54,7 +55,7 @@
                         // The end-user provided a string that does not correspond to any user that we have in the
                         // database.
                         case UserIdentity::ERROR_USERNAME_INVALID:
-                            $model->addError(
+                            $form->model->addError(
                                 'username',
                                 Yii::t('application', 'The username you entered does not exist.')
                             );
@@ -62,7 +63,7 @@
                         // The end-user specified a username that is not allowed to login via the current IP address
                         // that the end-user is using.
                         case UserIdentity::ERROR_IP_INVALID:
-                            $model->addError(
+                            $form->model->addError(
                                 'username',
                                 Yii::t('application', 'The username you entered may not login at this IP address.')
                             );
@@ -70,7 +71,7 @@
                         // The end-user has made too many login attempts in a specified amount of time, inform the user
                         // to wait a while before the next attempt.
                         case UserIdentity::ERROR_THROTTLED:
-                            $model->addError(
+                            $form->model->addError(
                                 'username',
                                 Yii::t('application', 'The username you entered has been throttled for security reasons. Please try again after a couple of seconds.')
                             );
@@ -78,7 +79,7 @@
                         // The end-user has specified a password that does not match the one associated with the
                         // username the end-user provided.
                         case UserIdentity::ERROR_PASSWORD_INVALID:
-                            $model->addError(
+                            $form->model->addError(
                                 'password',
                                 Yii::t('application', 'The password you entered was incorrect.')
                             );
@@ -93,7 +94,7 @@
             }
             // Make sure that we do not auto-populate the password field with anything that may have been submitted by
             // the user; we do not want their password encoded into the HTML of our page.
-            $model->password = null;
+            $form->model->password = null;
             // Pass the form builder to the default login view to render the login HTML form. If it is an AJAX request,
             // render only the partial "ajax" view.
             Yii::app()->request->isAjaxRequest
