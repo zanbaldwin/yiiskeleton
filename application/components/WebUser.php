@@ -4,6 +4,7 @@
 
     use \Yii;
     use \CException;
+    use \CEvent as Event;
     use \application\models\db\User;
 
     /**
@@ -28,30 +29,19 @@
         public function init()
         {
             parent::init();
-            // Is the user logged in?
-            if($this->isGuest === false) {
-                // Check a couple of things for security, like if the user is on the same IP address and browser that
-                // they used to log in with. Also check that the user exists in the database, and has not somehow been
-                // banned from the system.
-                if(
-                    $this->getState('userAgent') != $_SERVER['HTTP_USER_AGENT']
-                 || $this->getState('loginIP') != $_SERVER['REMOTE_ADDR']
-                 || !is_object($this->user = User::model()->findByPk($this->getState('id')))
-                 || !$this->user->active
-                ) {
-                    // If any of these simple checks fail, then log the user out immediately. Refer to the lengthy
-                    // explaination in the Logout controller as to why we pass bool(false).
-                    $this->logout(false);
-                    // Set a flash message explaining that the user has been logged out (nothing worse than being kicked
-                    // out without an explaination - people may complain about the system being faulty otherwise).
-                    $this->setFlash(
-                        'logout',
-                        Yii::t(
-                            'application',
-                            'You have been logged out because an attempted security breach has been detected. If this happens again please contact an administrator, as someone may be trying to access your account.'
-                        )
-                    );
-                }
+            // Raise an "onEndUser" event.
+            $this->onEndUser(new Event($this));
+            // Is the user logged in or not?
+            if(!$this->getState('isGuest')) {
+                // Load the database model for the currently logged in user so we can use their information throughout
+                // the request.
+                $this->user = User::model()->findByPk($this->getState('id'));
+                // Raise an "onAuthenticated" event; specifying that the end-user is logged in.
+                $this->onAuthenticated(new Event($this));
+            }
+            else {
+                // Raise an "onGuest" event; specifying that the end-user is not logged in.
+                $this->onGuest(new Event($this));
             }
         }
 
@@ -97,34 +87,53 @@
                 : null;
         }
 
+        /* ================= *\
+        |  EVENT DEFINITIONS  |
+        \* ================= */
 
         /**
-         * Get: Current Branch
-         *
-         * Returns the ID of the branch the currently logged-in user is viewing the site as. If a branch has not been
-         * specified, then the ID of the branch the user actually belongs to is returned.
+         * Event: End User
          *
          * @access public
-         * @return integer
+         * @return void
          */
-        public function getBranch()
+        public function onEndUser(Event $event)
         {
-            return $this->getState('branch', $this->user->branch);
+            // Use __FUNCTION__ instead of __METHOD__, as the latter will also return the name of the class that the
+            //method belongs to, which is not desired.
+            if($this->hasEventHandler($name = __FUNCTION__)) {
+                $this->raiseEvent($name, $event);
+            }
         }
 
-
         /**
-         * Get: Current Organisation
-         *
-         * Returns the ID of the organisation the currently logged-in user is viewing the site as. If an organisation
-         * has not been specified, then the ID of the organisation the user actually belongs to is returned.
+         * Event: Start Authenticate Process
          *
          * @access public
-         * @return integer
+         * @return void
          */
-        public function getOrganisation()
+        public function onGuest(Event $event)
         {
-            return $this->getState('organisation', $this->user->organisation);
+            // Use __FUNCTION__ instead of __METHOD__, as the latter will also return the name of the class that the
+            //method belongs to, which is not desired.
+            if($this->hasEventHandler($name = __FUNCTION__)) {
+                $this->raiseEvent($name, $event);
+            }
+        }
+
+        /**
+         * Event: Start Authenticate Process
+         *
+         * @access public
+         * @return void
+         */
+        public function onAuthenticated(Event $event)
+        {
+            // Use __FUNCTION__ instead of __METHOD__, as the latter will also return the name of the class that the
+            //method belongs to, which is not desired.
+            if($this->hasEventHandler($name = __FUNCTION__)) {
+                $this->raiseEvent($name, $event);
+            }
         }
 
     }
