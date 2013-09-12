@@ -5,6 +5,7 @@
     "type":             "project",
     "homepage":         "https://github.com/mynameiszanders/yiiskeleton",
     "license":          "MIT",
+    "version":          "1.0.0-alpha",
 
     "authors": [
         {
