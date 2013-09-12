@@ -36,6 +36,11 @@
          */
         public function saveMessage($event)
         {
+            // If we are in production mode, then do not run this method. It is slow and produces upto an unnecessary
+            // two database requests per missing message.
+            if(defined('PRODUCTION') && PRODUCTION) {
+                return;
+            }
             // Grab the database connection that the message component uses, rather than just "Yii::app()->db", as they
             // may be different.
             $this->db = $event->sender->getDbConnection();
@@ -54,7 +59,6 @@
                 $model->category = $event->category;
                 $model->message = $event->message;
                 $model->save();
-                $lastID = $this->db->lastInsertID;
             }
             // We now have the message in the database, don't bother with creating an entry for the translation and we
             // have no idea what the translation would be. Would could go into the Google Translate API, but that's not
