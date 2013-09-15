@@ -1,5 +1,7 @@
 <?php
 
+    use \application\components\Controller;
+
     class ErrorController extends Controller
     {
 

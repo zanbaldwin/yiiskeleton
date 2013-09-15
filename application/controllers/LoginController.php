@@ -1,5 +1,6 @@
 <?php
 
+    use \application\components\Controller;
     use \application\components\Form;
     use \application\components\UserIdentity;
 

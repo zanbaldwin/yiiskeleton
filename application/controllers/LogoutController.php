@@ -1,5 +1,6 @@
 <?php
 
+    use \application\components\Controller;
     use \application\model\db\User;
 
     class LogoutController extends Controller
