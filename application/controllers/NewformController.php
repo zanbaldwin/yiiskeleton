@@ -1,5 +1,11 @@
 <?php
 
+    namespace application\controllers;
+
+    use \Yii;
+    use \CException;
+    use \application\components\Controller;
+
     class NewformController extends Controller
     {
 
