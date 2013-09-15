@@ -46,6 +46,7 @@
         'sourceLanguage' => 'en',
         'theme' => 'classic',
         'defaultController' => 'home',
+        'controllerNamespace' => '\\application\\controllers',
 
         // Preloading 'log' component.
         'preload' => array('log'),
