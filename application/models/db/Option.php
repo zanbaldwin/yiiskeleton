@@ -4,6 +4,7 @@
 
     use \Yii;
     use \CException;
+    use \application\components\ActiveRecord;
 
     /**
      * This is the model class for table "{{option}}".
@@ -24,7 +25,7 @@
      * @property Vehicle[] $vehicles
      * @property Vehicle[] $vehicles1
      */
-    class Option extends \CActiveRecord
+    class Option extends ActiveRecord
     {
 
         /**

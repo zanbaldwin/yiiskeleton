@@ -4,8 +4,9 @@
 
     use \Yii;
     use \CException;
+    use \application\components\FormModel;
 
-    class Password extends \CFormModel
+    class Password extends FormModel
     {
 
         /**
