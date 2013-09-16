@@ -1,13 +1,31 @@
 <?php
 
+    namespace application\components;
+
+    use \Yii;
+    use \CException;
+
     /**
      * Controller
      *
      * Controller is the customized base controller class. All controller classes for this application should extend
      * from this base class.
      */
-    class Controller extends CController
+    abstract class Controller extends \CController
     {
+
+        /**
+         * Constructor Method
+         *
+         * @access public
+         * @reutrn void
+         */
+        public function __construct($id, $module = null)
+        {
+            parent::__construct($id, $module);
+            // Attach all registered event handlers and behaviours for the current controller.
+            \application\components\EventManager::attach($this);
+        }
 
         /**
          * @var string $layout

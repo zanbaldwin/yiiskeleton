@@ -11,6 +11,17 @@
         protected $segments;
 
         /**
+         * Constructor method
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct()
+        {
+            \application\components\EventManager::attach($this);
+        }
+
+        /**
          * Determine Application URI Segments
          *
          * @access protected

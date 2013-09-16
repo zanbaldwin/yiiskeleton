@@ -1,13 +1,16 @@
 # New Project
 
-Short description of the new project. This application is built for the web
-built on top of the [Yii Framework][yii].
+This project is designed to kickstart/bootstrap a new Yii application through
+Composer commands. Although it doesn't provide any functionality other than basic
+user authentication, it does provide many event declarations and an Event/Behaviour
+manager to allow the building of drop-in addons.
 
-This project also utilises the following libraries:
+This project utilises the following libraries:
 
 - [PHPass][phpass]: a library for the easy and secure management of passwords in
   PHP.
-- List any other Composer libraries used here...
+- [Yii Framework][yii]: a high-performance PHP framework best for developing Web 2.0
+  applications.
 
 
 
@@ -32,41 +35,51 @@ comments or DocComments.
 ## Source Code
 
 This project is kept under [Git][git] and is hosted on the [GitHub][github].
-Source code can be accessed from `git@github.com:mynameiszanders/newproject.git`.
+Source code can be accessed from `git@github.com:mynameiszanders/yiiskeleton.git`.
 
 
 ### Installation
 
-This project has been built on the presumption that it will run on a 64-bit
-[Debian](http://www.debian.org), or [Ubuntu](http://www.ubuntu.com), server
-with [PHP 5.3+](http://www.php.net).
+This project is designed to be installed via Composer's `create-project` command.
 
-Clone the source code into a temporary directory, and copy it to the directory
-directly above the webroot. If your webroot is not called `public_html`, you
-will have to move the contents of that directory into your webroot.
+    composer create-project mynameiszanders/yiiskeleton /path/to/project 1.0.0-alpha
 
-    git clone git@github.com:mynameiszanders/newproject.git /tmp/newproject
-    cp -r /tmp/newproject/* /home/username/
+Create the file `application/config/databases.php` which returns an array of
+environment-separated database credentials. For example:
 
-Switch to the root directory of the copied repository, and install the
-application dependancies through Composer.
+    <?php
+        return array(
+            'develop' => array(
+                'connectionString' => 'mysql:host=localhost;dbname=test',
+                'username' => 'root',
+                'password' => '',
+            ),
+            'production' => array(
+                'connectionString' => 'mysql:host=localhost;dbname=longDatabaseName',
+                'username' => 'accountName',
+                'password' => 'supersecret',
+                'tablePrefix' => 'app_'
+            ),
+        );
 
-    cd /home/username
-    composer update
+Next, place the name of your chosen environment inside
+`application/config/.environment`. Then perform the database migration which
+will upgrade your database to work with the application:
 
-After altering the settings found in `application/config/databases.php`, and
-specifying the application environment in `application/config/.environment`,
-switch to the `application` directory and perform the database migration -
-which will upgrade your database to work with the System60 application.
+    PROJECT="/path/to/project"
 
-    cd application
-    ./yiic migrate
+    $ cd "$PROJECT/application"
+    $ ./yiic migrate
+
+**Note:** This project has been built on the presumption that it will run on a
+64-bit [Debian](http://www.debian.org), or [Ubuntu](http://www.ubuntu.com),
+server with [PHP 5.3+](http://www.php.net).
 
 
 
 ## Authors
 
-- [Zander Baldwin][zander]; lead technical developer.
+- [Zander Baldwin][zander]; project lead.
 
 
 

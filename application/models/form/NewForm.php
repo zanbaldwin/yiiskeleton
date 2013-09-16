@@ -4,13 +4,14 @@
 
     use \Yii;
     use \CException;
+    use \application\components\FormModel;
 
     /**
      * LoginForm: Form Model
      *
      * LoginForm is the model for defining how the HTML login form is used.
      */
-    class NewForm extends \CFormModel
+    class NewForm extends FormModel
     {
 
         public $firstinput;

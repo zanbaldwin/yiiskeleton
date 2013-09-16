@@ -18,8 +18,19 @@
      * @copyright   2013 Zander Baldwin
      * @license     MIT/X11 <http://j.mp/mit-license>
      */
-    class IP
+    class IP extends \CComponent
     {
+
+        /**
+         * Constructor Method
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct()
+        {
+            \application\components\EventManager::attach($this);
+        }
 
         /**
          * Protocol to Number

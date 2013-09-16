@@ -4,6 +4,7 @@
 
     use \Yii;
     use \CException;
+    use \application\components\ActiveRecord;
     use \application\components\IP;
 
     /**
@@ -24,7 +25,7 @@
      * The followings are the available model relations:
      * @property Branch $Branch
      */
-    class User extends \CActiveRecord
+    class User extends ActiveRecord
     {
 
         /**

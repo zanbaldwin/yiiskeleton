@@ -18,6 +18,18 @@
     {
 
         /**
+         * Constructor Method
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct($owner = null)
+        {
+            parent::__construct($owner);
+            \application\components\EventManager::attach($this);
+        }
+
+        /**
          * Render: Input Field
          *
          * @access public

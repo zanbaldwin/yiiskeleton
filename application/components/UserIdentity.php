@@ -6,7 +6,6 @@
     use \CException;
     use \CEvent as Event;
     use \application\models\db\User;
-    use \application\models\db\FailedLogin;
 
     /**
      * User Identity
@@ -29,6 +28,19 @@
         const ERROR_IP_INVALID = 3;
         const ERROR_THROTTLED = 4;
         const ERROR_ID_INVALID = 5;
+
+
+        /**
+         * Constructor Method
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct($username, $password)
+        {
+            parent::__construct($username, $password);
+            \application\components\EventManager::attach($this);
+        }
 
 
         /**

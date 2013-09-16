@@ -35,8 +35,6 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>Yii::t('application', 'Home'), 'url'=>Yii::app()->homeUrl),
-				array('label'=>Yii::t('application', 'Enquiry'), 'url'=>array('/enquiry')),
-				array('label'=>Yii::t('application', 'Contact'), 'url'=>array('/home/contact')),
 				array('label'=>Yii::t('application', 'Login'), 'url'=>array('/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>Yii::t('application', 'Logout ({name})', array('{name}' => Yii::app()->user->displayName)), 'url'=>array('/logout'), 'visible'=>!Yii::app()->user->isGuest),
 			),

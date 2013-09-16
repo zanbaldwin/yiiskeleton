@@ -21,6 +21,18 @@
 
 
         /**
+         * Constructor Method
+         *
+         * @access public
+         * @return void
+         */
+        public function __construct()
+        {
+            \application\components\EventManager::attach($this);
+        }
+
+
+        /**
          * Initialisation Method
          *
          * @access public
@@ -30,7 +42,7 @@
         {
             parent::init();
             // Raise an "onEndUser" event.
-            $this->onEndUser(new Event($this));
+            $this->onStartUser(new Event($this));
             // Is the user logged in or not?
             if(!$this->getState('isGuest')) {
                 // Load the database model for the currently logged in user so we can use their information throughout
@@ -97,7 +109,7 @@
          * @access public
          * @return void
          */
-        public function onEndUser(Event $event)
+        public function onStartUser(Event $event)
         {
             // Use __FUNCTION__ instead of __METHOD__, as the latter will also return the name of the class that the
             //method belongs to, which is not desired.

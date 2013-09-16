@@ -40,21 +40,16 @@
     \* ============================== */
 
     // This is the main Web application configuration. Any writable CWebApplication properties can be configured here.
-    return array(
+    $config = array(
         'basePath' => dirname(__FILE__) . '/..',
         'name' => Yii::t('application', 'New Project'),
         'sourceLanguage' => 'en',
         'theme' => 'classic',
         'defaultController' => 'home',
+        'controllerNamespace' => '\\application\\controllers',
 
         // Preloading 'log' component.
         'preload' => array('log'),
-
-        'behaviors' => array(
-            // Attach a a behaviour to the main application to set the application language for the end-user on the
-            // "beginRequest" event.
-            '\\application\\behaviours\\ApplicationLanguage',
-        ),
 
         // Autoloading model and component classes. Hopefully this will eventually become obsolete by making use of
         // namespaces in all classes apart from controllers.
@@ -118,20 +113,6 @@
                 ),
             ),
 
-            // System Components: Messages.
-            'messages' => array(
-                // NOTE: Please remove this behaviour in production, it is extremely database heavy. Only use in
-                // development when populating the database with new messages and translations.
-                'behaviors' => array('\\application\\behaviours\\MissingMessage'),
-                'cacheID' => 'cache',
-                'cachingDuration' => 60 * 30,
-                'class' => 'system.i18n.CDbMessageSource',
-                'connectionID' => 'db',
-                'forceTranslation' => true,
-                'sourceMessageTable' => '{{message}}',
-                'translatedMessageTable' => '{{translation}}',
-            ),
-
             // Application Component: HTTP Request.
             'request' => array(
                 'class' => 'application\\components\\HttpRequest',
@@ -183,3 +164,14 @@
             'login.throttle' => 0.5,
         ),
     );
+
+    /* ========================== *\
+    |  Configuration from Add-ons  |
+    \* ========================== */
+
+    // Define the "application" namespace, as it doesn't currently exist (CWebApplication doesn't know what the
+    // basePath is yet).
+    Yii::setPathOfAlias('application', $config['basePath']);
+
+    $addons = require_once dirname(__FILE__) . '/addons.php';
+    return CMap::mergeArray($config, $addons);

@@ -1,11 +1,10 @@
 <?php
 
-    namespace application\behaviours;
+    namespace application\addons\language\behaviours;
 
     use \Yii;
     use \CException;
     use \application\models\db\Message;
-    use \application\models\db\Translation;
 
     class MissingMessage extends \CBehavior
     {
