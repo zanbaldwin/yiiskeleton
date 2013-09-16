@@ -51,12 +51,6 @@
         // Preloading 'log' component.
         'preload' => array('log'),
 
-        'behaviors' => array(
-            // Attach a a behaviour to the main application to set the application language for the end-user on the
-            // "beginRequest" event.
-            '\\application\\behaviours\\ApplicationLanguage',
-        ),
-
         // Autoloading model and component classes. Hopefully this will eventually become obsolete by making use of
         // namespaces in all classes apart from controllers.
         'import' => array(
@@ -117,20 +111,6 @@
                         'levels' => 'error, warning',
                     ),
                 ),
-            ),
-
-            // System Components: Messages.
-            'messages' => array(
-                // NOTE: Please remove this behaviour in production, it is extremely database heavy. Only use in
-                // development when populating the database with new messages and translations.
-                'behaviors' => array('\\application\\behaviours\\MissingMessage'),
-                'cacheID' => 'cache',
-                'cachingDuration' => 60 * 30,
-                'class' => 'system.i18n.CDbMessageSource',
-                'connectionID' => 'db',
-                'forceTranslation' => true,
-                'sourceMessageTable' => '{{message}}',
-                'translatedMessageTable' => '{{translation}}',
             ),
 
             // Application Component: HTTP Request.
