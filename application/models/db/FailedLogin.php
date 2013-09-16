@@ -4,6 +4,7 @@
 
     use \Yii;
     use \CException;
+    use \application\components\ActiveRecord;
 
     /**
      * This is the model class for table "failed_logins".
@@ -18,7 +19,7 @@
      * The followings are the available model relations:
      * @property User $User
      */
-    class FailedLogin extends \CActiveRecord
+    class FailedLogin extends ActiveRecord
     {
 
 

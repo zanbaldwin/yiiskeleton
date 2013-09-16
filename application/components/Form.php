@@ -23,6 +23,21 @@
         public $activeForm = array('class' => '\\application\\components\\ActiveForm');
 
         /**
+         * Constructor Method
+         *
+         * @access public
+         * @param string|array $config
+         * @param CModel $model
+         * @param CBaseController|CForm $parent
+         * @return void
+         */
+        public function __construct($config, $model = null, $parent = null)
+        {
+            parent::__construct($config, $model, $parent);
+            \application\components\EventManager::attach($this);
+        }
+
+        /**
          * Is Form Submitted?
          *
          * @access public
