@@ -40,7 +40,7 @@
     \* ============================== */
 
     // This is the main Web application configuration. Any writable CWebApplication properties can be configured here.
-    return array(
+    $config = array(
         'basePath' => dirname(__FILE__) . '/..',
         'name' => Yii::t('application', 'New Project'),
         'sourceLanguage' => 'en',
@@ -164,3 +164,14 @@
             'login.throttle' => 0.5,
         ),
     );
+
+    /* ========================== *\
+    |  Configuration from Add-ons  |
+    \* ========================== */
+
+    // Define the "application" namespace, as it doesn't currently exist (CWebApplication doesn't know what the
+    // basePath is yet).
+    Yii::setPathOfAlias('application', $config['basePath']);
+
+    $addons = require_once dirname(__FILE__) . '/addons.php';
+    return CMap::mergeArray($config, $addons);
