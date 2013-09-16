@@ -4,7 +4,7 @@
 
     use \Yii;
     use \CException;
-    use \CActiveRecord;
+    use \application\components\ActiveRecord;
 
     /**
      * This is the model class for table "{{message}}".
@@ -17,7 +17,7 @@
      * The followings are the available model relations:
      * @property Translation[] $translations
      */
-    class Message extends CActiveRecord
+    class Message extends ActiveRecord
     {
 
         /**

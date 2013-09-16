@@ -1,6 +1,6 @@
 <?php
 
-    namespace application\behaviours;
+    namespace application\addons\language\behaviours;
 
     use \Yii;
     use \CException;
